@@ -10,20 +10,18 @@ create table user(user_id int(10) primary key not null auto_increment, fname var
 
 alter table userorder add constraint order_user_id_fk foreign key(user_id) references user(user_id);
 
-//alter table product add column description varchar(1000);
-
 create table orderItems ( item_id int(10) primary key not null auto_increment, name varchar(50), quantity int(2), order_id int(10));
 
 alter table orderItems add constraint order_id_fk foreign key(order_id) references userorder(order_id);
 
- alter table userorder add column order_date date;
- alter table user modify phone varchar(10);
+alter table userorder add column order_date date;
+alter table user modify phone varchar(10);
 alter table userorder modify order_date timestamp;
 
- alter table orderItems add column hotness varchar(10);
+alter table orderItems add column hotness varchar(10);
  
- alter table user add column address varchar(100);
-// DDL
+alter table user add column address varchar(100);
+
 
 
 insert into category values (1,"APPETIZERS");
