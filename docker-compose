@@ -1,0 +1,24 @@
+version: '3'
+services:
+  mysql:
+    container_name: taj_mysql
+    image: taj_mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    restart: always
+  app:
+    container_name: rest
+    restart: always
+    build: .
+    image: restaurant:latest
+    expose:
+      - "8080"
+    ports:
+      - "8086:8080"
+    environment:
+      - dbDriver=com.mysql.jdbc.Driver
+      - dbConnectionUrl=jdbc:mysql://taj_mysql:3306/taj_restaurant
+      - dbUserName=root
+      - dbPassword=root
