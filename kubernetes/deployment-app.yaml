@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: hello
+    tier: frontend
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: hello
+        tier: frontend
+        track: stable
+    spec:
+      containers:
+      - name: apserver
+        image: ankitvarshney081/restaurant:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+         - name: dbDriver
+           value: com.mysql.jdbc.Driver
+         - name: dbConnectionUrl
+           value: jdbc:mysql://hello.default.svc.cluster.local:3306/taj_restaurant
+         - name: dbUserName
+           value: root
+         - name: dbPassword
+           value: root
